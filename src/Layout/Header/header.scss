@@ -1,0 +1,44 @@
+.header {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    background-color: var(--header-color);
+    color: var(--text-primary);
+    border-bottom: 1px solid #ccc;
+    .logo {
+        width: 20%;
+    }
+
+    .search {
+        flex: 1;
+
+        .search-input {
+            width: 70%;
+            border-radius: 20px;
+            height: 40px;
+            padding: 8px 12px;
+            font-size: 1.6rem;
+            background-color: var(--background-secondary);
+            color: var(--text-primary);
+
+            &::placeholder {
+                /* Chrome, Firefox, Opera, Safari 10.1+ */
+                color: var(--text-secondary);
+                opacity: 1; /* Firefox */
+            }
+
+            &:-ms-input-placeholder {
+                /* Internet Explorer 10-11 */
+                color: var(--text-secondary);
+            }
+
+            &::-ms-input-placeholder {
+                /* Microsoft Edge */
+                color: var(--text-secondary);
+            }
+        }
+    }
+
+    .user {
+    }
+}

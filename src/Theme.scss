@@ -1,0 +1,21 @@
+:root {
+    --header-color: #fff;
+    --background: #fff;
+    --background-secondary: #f0f2f5;
+    --text-primary: #161823;
+    --text-secondary: #65676b;
+    --secondary-color: #fbd542;
+    --font-family: "ProximaNova", sans-serif;
+    // --default-layout-header-height: 60px;
+    // --default-layout-width: 1200px;
+    // --default-layout-horizontal-spacer: 24px;
+}
+
+[data-theme="dark"] {
+    --header-color: #242526;
+    --background: black;
+    --background-secondary: #3a3b3c;
+    --text-primary: white;
+    --text-secondary: #b0b3b8;
+    --secondary-color: grey;
+}
