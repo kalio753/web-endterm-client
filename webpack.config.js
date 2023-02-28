@@ -44,19 +44,12 @@ module.exports = {
             },
 
             {
-                test: /\.(png|jp(e*)g|svg|gif)$/i,
-                // use: [
-                //     {
-                //         loader: "file-loader",
-                //         options: {
-                //             publicPath: "assets/images",
-                //             name: "images/[hash]-[name].[ext]"
-                //         }
-                //     }
-                // ]
-                // test: /\.png$/,
-                type: "asset/resource"
-            }
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                loader: 'file-loader',
+                options: {
+                    name: '[path][name].[ext]',
+                },
+            },
         ]
     }
 }
