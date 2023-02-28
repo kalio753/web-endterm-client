@@ -6,18 +6,19 @@ module.exports = {
 
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "bundle.js"
+        filename: "bundle.js",
     },
 
     plugins: [
         new HTMLWebpackPlugin({
-            template: "src/index.html"
-        })
+            template: "src/index.html",
+        }),
     ],
 
-    // devServer: {
-    //     historyApiFallback: true
-    // },
+    devServer: {
+        historyApiFallback: true,
+        allowedHosts: "all",
+    },
 
     module: {
         rules: [
@@ -29,27 +30,27 @@ module.exports = {
                     options: {
                         presets: [
                             "@babel/preset-env",
-                            ["@babel/preset-react", { runtime: "automatic" }]
-                        ]
-                    }
-                }
+                            ["@babel/preset-react", { runtime: "automatic" }],
+                        ],
+                    },
+                },
             },
             {
                 test: /\.s[ac]ss$/i,
-                use: ["style-loader", "css-loader", "sass-loader"]
+                use: ["style-loader", "css-loader", "sass-loader"],
             },
             {
                 test: /\.css$/i,
-                use: ["style-loader", "css-loader"]
+                use: ["style-loader", "css-loader"],
             },
 
             {
                 test: /\.(png|jpe?g|gif|svg)$/i,
-                loader: 'file-loader',
+                loader: "file-loader",
                 options: {
-                    name: '[path][name].[ext]',
+                    name: "[path][name].[ext]",
                 },
             },
-        ]
-    }
+        ],
+    },
 }

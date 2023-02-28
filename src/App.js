@@ -1,17 +1,13 @@
-import { useEffect, useState } from "react"
-import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-    Routes,
-    Outlet
-} from "react-router-dom"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import "./App.scss"
 import "./Theme.scss"
 import Header from "./Layout/Header/Header.jsx"
 import About from "./Pages/About/About.jsx"
 import Home from "./Pages/Home/Home.jsx"
 import useLocalStorage from "use-local-storage"
+import Login from "./Pages/Login/Login.jsx"
+import Signup from "./Pages/Signup/Signup.jsx"
+import ProtectedLayout from "./routes/ProtectedLayout.jsx"
 
 function App() {
     const defaultDark = window.matchMedia(
@@ -30,25 +26,47 @@ function App() {
     return (
         <div className="" data-theme={theme}>
             <Router>
-                <Header toggleTheme={toggleTheme} theme={theme} />
-                <div style={{marginTop: 56}}>
+                {/* <div style={{ marginTop: 56 }}>
                     <Link to="/">Home</Link>
                     <Link to="/about">About</Link>
+                    <Link to="/login">Login</Link>
                     <button onClick={toggleTheme}>
                         Switch to {theme === "light" ? "dark" : "light"} theme
                     </button>
-                </div>
+                </div> */}
 
                 <Routes>
+                    <Route path="/" element={<Home />} />
+
                     <Route
-                        path="/"
+                        path="/login"
+                        index
+                        element={<Login toggleTheme={toggleTheme} />}
+                    ></Route>
+
+                    <Route
+                        path="/signup"
+                        element={<Signup toggleTheme={toggleTheme} />}
+                    ></Route>
+
+                    {/* <Route path="/user" element={<ProtectedLayout />}> */}
+                    <Route
                         element={
-                            <Home toggleTheme={toggleTheme} theme={theme} />
+                            <Header toggleTheme={toggleTheme} theme={theme} />
+                        }
+                    >
+                        <Route path="about" element={<About />}></Route>
+                    </Route>
+                    {/* </Route> */}
+
+                    <Route
+                        path="*"
+                        element={
+                            <div>
+                                <h2>404 Page not found</h2>
+                            </div>
                         }
                     />
-                    <Route path="about" element={<About />}>
-                        {/* <Route path="ab" element={<Test />} /> */}
-                    </Route>
                 </Routes>
             </Router>
         </div>

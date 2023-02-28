@@ -15,7 +15,7 @@
         display: flex;
         justify-content: flex-start;
         margin-left: 16px;
-        
+
         a {
             width: 70%;
             cursor: pointer;
@@ -24,6 +24,7 @@
             img {
                 width: 100%;
                 height: 100%;
+                object-fit: cover;
             }
         }
     }
@@ -75,7 +76,9 @@
         margin-right: 12px;
         width: 20%;
         justify-content: flex-end;
-        &-avatar, &-noti, &-mess {
+        &-avatar,
+        &-noti,
+        &-mess {
             cursor: pointer;
             background-color: var(--icon-background);
             border-radius: 20px;
@@ -91,13 +94,14 @@
             }
         }
 
-        &-noti, &-mess {
+        &-noti,
+        &-mess {
             display: flex;
             align-items: center;
             justify-content: center;
 
             img {
-                filter: var(--icon-color)
+                filter: var(--icon-color);
             }
         }
     }
