@@ -5,12 +5,13 @@ import Avatar from '../../assets/images/avatar.jpg'
 import SearchIcon from '../../assets/icon/search.svg'
 import MessageIcon from '../../assets/icon/mess.svg'
 import NotificationIcon from '../../assets/icon/notification.svg'
+import { Link } from "react-router-dom"
 
 const Header = ({ toggleTheme, theme }) => {
     return (
         <section className={`header`}>
             <div className="logo">
-                <img src={Logo} alt="" />
+                <Link to="/" ><img src={Logo} alt="" /></Link>
             </div>
             <div className="search">
                 <input

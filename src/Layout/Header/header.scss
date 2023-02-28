@@ -1,4 +1,8 @@
 .header {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    width: 100%;
     display: flex;
     align-items: center;
     height: 56px;
@@ -12,10 +16,15 @@
         justify-content: flex-start;
         margin-left: 16px;
         
-        img {
+        a {
             width: 70%;
             cursor: pointer;
             height: 100%;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
         }
     }
 
@@ -24,7 +33,7 @@
         position: relative;
 
         &-input {
-            width: 70%;
+            width: 99%;
             border-radius: 20px;
             height: 40px;
             padding: 8px 20px 8px 48px;
@@ -64,6 +73,8 @@
         display: flex;
         gap: 12px;
         margin-right: 12px;
+        width: 20%;
+        justify-content: flex-end;
         &-avatar, &-noti, &-mess {
             cursor: pointer;
             background-color: var(--icon-background);

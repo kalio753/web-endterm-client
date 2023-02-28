@@ -27,19 +27,17 @@ function App() {
         const newTheme = theme === "light" ? "dark" : "light"
         setTheme(newTheme)
     }
-    // useEffect(() => {
-    //     localStorage.setItem("theme", theme)
-    //     document.body.className = theme
-    // }, [theme])
     return (
         <div className="" data-theme={theme}>
             <Router>
                 <Header toggleTheme={toggleTheme} theme={theme} />
-                <Link to="/">Home</Link>
-                <Link to="/about">About</Link>
-                <button onClick={toggleTheme}>
-                    Switch to {theme === "light" ? "dark" : "light"} theme
-                </button>
+                <div style={{marginTop: 56}}>
+                    <Link to="/">Home</Link>
+                    <Link to="/about">About</Link>
+                    <button onClick={toggleTheme}>
+                        Switch to {theme === "light" ? "dark" : "light"} theme
+                    </button>
+                </div>
 
                 <Routes>
                     <Route
