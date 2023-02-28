@@ -22,6 +22,8 @@ export default function Signup({ toggleTheme }) {
 
                 <Input placeholder="Username" className="login-input" />
 
+                <Input placeholder="Email" className="login-input" />
+
                 <Input
                     placeholder="Password"
                     className="login-input"

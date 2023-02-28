@@ -4,10 +4,11 @@ import "./Theme.scss"
 import Header from "./Layout/Header/Header.jsx"
 import About from "./Pages/About/About.jsx"
 import Home from "./Pages/Home/Home.jsx"
-import useLocalStorage from "use-local-storage"
 import Login from "./Pages/Login/Login.jsx"
 import Signup from "./Pages/Signup/Signup.jsx"
 import ProtectedLayout from "./routes/ProtectedLayout.jsx"
+import { UnProtecedLayout } from "./routes/UnprotectedLayout.jsx"
+import useLocalStorage from "use-local-storage"
 
 function App() {
     const defaultDark = window.matchMedia(
@@ -36,28 +37,30 @@ function App() {
                 </div> */}
 
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route element={<UnProtecedLayout />}>
+                        <Route path="/" element={<Home />} />
 
-                    <Route
-                        path="/login"
-                        index
-                        element={<Login toggleTheme={toggleTheme} />}
-                    ></Route>
+                        <Route
+                            path="/login"
+                            index
+                            element={<Login toggleTheme={toggleTheme} />}
+                        ></Route>
 
-                    <Route
-                        path="/signup"
-                        element={<Signup toggleTheme={toggleTheme} />}
-                    ></Route>
+                        <Route
+                            path="/signup"
+                            element={<Signup toggleTheme={toggleTheme} />}
+                        ></Route>
+                    </Route>
 
-                    {/* <Route path="/user" element={<ProtectedLayout />}> */}
-                    <Route
+                    <Route path="/user" element={<ProtectedLayout />}>
+                        {/* <Route
                         element={
                             <Header toggleTheme={toggleTheme} theme={theme} />
                         }
-                    >
+                    > */}
                         <Route path="about" element={<About />}></Route>
+                        {/* </Route> */}
                     </Route>
-                    {/* </Route> */}
 
                     <Route
                         path="*"

@@ -43,7 +43,7 @@ export default function Login({ toggleTheme }) {
                     </Checkbox>
 
                     <div className="login-option-nav">
-                        <Link to="">Forgot password?</Link>
+                        <Link to="/user/about">Forgot password?</Link>
                     </div>
                 </div>
 

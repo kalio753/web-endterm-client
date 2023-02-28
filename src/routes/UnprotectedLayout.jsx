@@ -1,19 +1,18 @@
 import { Link, Navigate, Outlet } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
 
-export default function ProtectedLayout() {
+export const UnProtecedLayout = () => {
     const { user } = useAuth()
 
-    if (!user) {
-        console.log("getout")
-        return <Navigate to="/" />
+    if (user) {
+        return <Navigate to="/user/about" />
     }
 
     return (
         <div>
             <nav>
-                <Link to="/settings">Settings</Link>
-                <Link to="/profile">Profile</Link>
+                <Link to="/">Home</Link>
+                <Link to="/login">Login</Link>
             </nav>
             <Outlet />
         </div>
