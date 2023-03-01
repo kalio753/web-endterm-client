@@ -1,0 +1,14 @@
+.signup-container {
+    width: 600px;
+
+    .signup-input-section {
+        display: flex;
+        flex-direction: column;
+
+        div {
+            display: flex;
+            gap: 16px;
+        }
+        // gap: 16px;
+    }
+}

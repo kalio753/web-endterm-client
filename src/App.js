@@ -9,8 +9,14 @@ import Signup from "./Pages/Signup/Signup.jsx"
 import ProtectedLayout from "./routes/ProtectedLayout.jsx"
 import { UnProtecedLayout } from "./routes/UnprotectedLayout.jsx"
 import useLocalStorage from "use-local-storage"
+import { useDispatch, useSelector } from "react-redux"
+import { getTest } from "./redux/slices/testSlice"
+import { getTestSelector } from "./redux/selector"
+import { useEffect } from "react"
 
 function App() {
+    const dispatch = useDispatch()
+
     const defaultDark = window.matchMedia(
         "(prefers-color-scheme: dark)"
     ).matches
@@ -18,6 +24,13 @@ function App() {
         "theme",
         defaultDark ? "dark" : "light"
     )
+
+    useEffect(() => {
+        dispatch(getTest())
+    }, [dispatch])
+
+    const test = useSelector(getTestSelector)
+    console.log("alu", test)
 
     // const [theme, setTheme] = useState(localStorage.getItem("theme") || "light")
     const toggleTheme = () => {
@@ -38,7 +51,10 @@ function App() {
 
                 <Routes>
                     <Route element={<UnProtecedLayout />}>
-                        <Route path="/" element={<Home />} />
+                        <Route
+                            path="/"
+                            element={<Home toggleTheme={toggleTheme} />}
+                        />
 
                         <Route
                             path="/login"
@@ -53,13 +69,16 @@ function App() {
                     </Route>
 
                     <Route path="/user" element={<ProtectedLayout />}>
-                        {/* <Route
-                        element={
-                            <Header toggleTheme={toggleTheme} theme={theme} />
-                        }
-                    > */}
-                        <Route path="about" element={<About />}></Route>
-                        {/* </Route> */}
+                        <Route
+                            element={
+                                <Header
+                                    toggleTheme={toggleTheme}
+                                    theme={theme}
+                                />
+                            }
+                        >
+                            <Route path="about" element={<About />}></Route>
+                        </Route>
                     </Route>
 
                     <Route

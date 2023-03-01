@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import Theme from "../../assets/icon/login-theme.svg"
 import Bottom1 from "../../assets/icon/login-bottom1.svg"
 import Bottom2 from "../../assets/icon/login-bottom2.svg"
+import { useAuth } from "../../hooks/useAuth"
 
 export default function Login({ toggleTheme }) {
     const navigate = useNavigate()
@@ -13,8 +14,8 @@ export default function Login({ toggleTheme }) {
         console.log(`checked = ${e.target.checked}`)
     }
 
-    const loginBtnClicked = () => {
-        navigate("/")
+    const loginBtnClicked = async () => {
+        navigate("/user/about")
     }
 
     return (

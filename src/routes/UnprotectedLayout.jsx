@@ -10,10 +10,6 @@ export const UnProtecedLayout = () => {
 
     return (
         <div>
-            <nav>
-                <Link to="/">Home</Link>
-                <Link to="/login">Login</Link>
-            </nav>
             <Outlet />
         </div>
     )
