@@ -8,6 +8,8 @@ import Bottom1 from "../../assets/icon/login-bottom1.svg"
 import Bottom2 from "../../assets/icon/login-bottom2.svg"
 
 export default function Signup({ toggleTheme }) {
+    document.title = "Signup"
+
     return (
         <section className="login">
             <div className="login-container signup-container">

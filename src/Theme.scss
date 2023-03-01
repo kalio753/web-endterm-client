@@ -1,6 +1,4 @@
 :root {
-    --header-color: #fff;
-
     --background-secondary: #f0f2f5;
 
     --text-primary: #161823;
@@ -11,14 +9,12 @@
 
     --secondary-color: #fbd542;
     --font-family: "Lexend Deca", sans-serif;
-    // --default-layout-header-height: 60px;
+    --header-height: 56px;
     // --default-layout-width: 1200px;
     // --default-layout-horizontal-spacer: 24px;
 }
 
 [data-theme="dark"] {
-    --header-color: #093545;
-
     --background-secondary: #224957;
 
     --text-primary: white;

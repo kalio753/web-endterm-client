@@ -1,3 +1,13 @@
+:root {
+    --header-color: #fff;
+    --border-color: #ccc;
+}
+
+[data-theme="dark"] {
+    --header-color: #093545;
+    --border-color: #224957;
+}
+
 .header {
     position: fixed;
     top: 0;
@@ -5,19 +15,19 @@
     width: 100%;
     display: flex;
     align-items: center;
-    height: 56px;
+    height: var(--header-height);
     background-color: var(--header-color);
     color: var(--text-primary);
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--border-color);
     .logo {
-        width: 20%;
+        width: 100%;
+        max-width: 360px;
         height: 100%;
         display: flex;
         justify-content: flex-start;
-        margin-left: 16px;
+        // overflow: hidden;
 
         a {
-            width: 70%;
             cursor: pointer;
             height: 100%;
 
@@ -74,7 +84,8 @@
         display: flex;
         gap: 12px;
         margin-right: 12px;
-        width: 20%;
+        width: 100%;
+        max-width: 360px;
         justify-content: flex-end;
         &-avatar,
         &-noti,
@@ -104,5 +115,13 @@
                 filter: var(--icon-color);
             }
         }
+    }
+}
+
+.user-dropdown {
+    width: 200px;
+
+    .ant-dropdown-menu {
+        background-color: var(--background-secondary);
     }
 }

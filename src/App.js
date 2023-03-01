@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import "./App.scss"
 import "./Theme.scss"
 import Header from "./Layout/Header/Header.jsx"
-import About from "./Pages/About/About.jsx"
+import Profile from "./Pages/Profile/Profile.jsx"
 import Home from "./Pages/Home/Home.jsx"
 import Login from "./Pages/Login/Login.jsx"
 import Signup from "./Pages/Signup/Signup.jsx"
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getTest } from "./redux/slices/testSlice"
 import { getTestSelector } from "./redux/selector"
 import { useEffect } from "react"
+import AnimationLayout from "./Layout/Animation/AnimationLayout.jsx"
 
 function App() {
     const dispatch = useDispatch()
@@ -50,25 +51,7 @@ function App() {
                 </div> */}
 
                 <Routes>
-                    <Route element={<UnProtecedLayout />}>
-                        <Route
-                            path="/"
-                            element={<Home toggleTheme={toggleTheme} />}
-                        />
-
-                        <Route
-                            path="/login"
-                            index
-                            element={<Login toggleTheme={toggleTheme} />}
-                        ></Route>
-
-                        <Route
-                            path="/signup"
-                            element={<Signup toggleTheme={toggleTheme} />}
-                        ></Route>
-                    </Route>
-
-                    <Route path="/user" element={<ProtectedLayout />}>
+                    <Route element={<AnimationLayout />}>
                         <Route
                             element={
                                 <Header
@@ -77,18 +60,48 @@ function App() {
                                 />
                             }
                         >
-                            <Route path="about" element={<About />}></Route>
+                            <Route path="/" element={<Profile />}></Route>
                         </Route>
-                    </Route>
+                        {/* <Route element={<UnProtecedLayout />}>
+                            <Route
+                                path="/"
+                                element={<Home toggleTheme={toggleTheme} />}
+                            />
 
-                    <Route
-                        path="*"
-                        element={
-                            <div>
-                                <h2>404 Page not found</h2>
-                            </div>
-                        }
-                    />
+                            <Route
+                                path="/login"
+                                index
+                                element={<Login toggleTheme={toggleTheme} />}
+                            ></Route>
+
+                            <Route
+                                path="/signup"
+                                element={<Signup toggleTheme={toggleTheme} />}
+                            ></Route>
+                        </Route>
+
+                        <Route path="/user" element={<ProtectedLayout />}>
+                            <Route
+                                element={
+                                    <Header
+                                        toggleTheme={toggleTheme}
+                                        theme={theme}
+                                    />
+                                }
+                            >
+                                <Route path="about" element={<About />}></Route>
+                            </Route>
+                        </Route> */}
+
+                        <Route
+                            path="*"
+                            element={
+                                <div>
+                                    <h2>404 Page not found</h2>
+                                </div>
+                            }
+                        />
+                    </Route>
                 </Routes>
             </Router>
         </div>

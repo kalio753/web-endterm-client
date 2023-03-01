@@ -8,6 +8,8 @@ import Bottom2 from "../../assets/icon/login-bottom2.svg"
 import { useAuth } from "../../hooks/useAuth"
 
 export default function Login({ toggleTheme }) {
+    document.title = "Login"
+
     const navigate = useNavigate()
 
     const toggleCheckBox = (e) => {
