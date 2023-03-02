@@ -8,6 +8,7 @@ import NotificationIcon from "../../assets/icon/notification.svg"
 import { Link, Outlet, useNavigate } from "react-router-dom"
 import { DownOutlined } from "@ant-design/icons"
 import { Dropdown, Space } from "antd"
+import GlobalSvgIcon from "../../Components/GlobalSvgIcon/GlobalSvgIcon.jsx"
 
 const Header = ({ toggleTheme, theme }) => {
     const navigate = useNavigate()
@@ -30,7 +31,7 @@ const Header = ({ toggleTheme, theme }) => {
         {
             label: (
                 <div onClick={() => toggleTheme()}>{`${
-                    theme === "dark" ? "light" : "dark"
+                    theme === "dark" ? "Light" : "Dark"
                 } mode`}</div>
             ),
             key: "1",
@@ -68,13 +69,8 @@ const Header = ({ toggleTheme, theme }) => {
                     <img src={SearchIcon} alt="" className="search-icon" />
                 </div>
                 <div className="user">
-                    <div className="user-mess">
-                        <img src={MessageIcon} alt="" />
-                    </div>
-
-                    <div className="user-noti">
-                        <img src={NotificationIcon} alt="" />
-                    </div>
+                    <GlobalSvgIcon url={MessageIcon} />
+                    <GlobalSvgIcon url={NotificationIcon} />
 
                     <Dropdown
                         menu={{

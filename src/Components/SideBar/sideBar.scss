@@ -1,0 +1,21 @@
+.profile {
+    .profile-col-side.col-1 {
+        height: 100vh;
+        overflow: hidden;
+        border-right: 1px solid var(--sidebar-border-color);
+        position: fixed;
+
+        .menu {
+            width: 100%;
+            margin: 12px 8px 0;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--sidebar-border-color);
+        }
+
+        .ad {
+            width: 100%;
+            margin-top: 16px;
+            cursor: pointer;
+        }
+    }
+}

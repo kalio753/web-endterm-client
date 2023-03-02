@@ -1,0 +1,38 @@
+.menu-card {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 16px 16px;
+    cursor: pointer;
+    margin-bottom: 2px;
+
+    &-avatar {
+        border-radius: 20px;
+        margin-right: 16px;
+        width: 32px;
+        height: 32px;
+    }
+
+    &-icon {
+        margin-right: 16px;
+        width: 30px;
+        height: 30px;
+    }
+
+    h3 {
+        color: var(--text-primary);
+        font-size: 1.5rem;
+        font-weight: 500;
+    }
+
+    .global-svg-icon {
+        width: 30px;
+        height: 30px;
+        margin-right: 16px;
+    }
+
+    &:hover {
+        background-color: var(--menu-hover);
+        border-radius: 12px;
+    }
+}
