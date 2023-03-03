@@ -13,7 +13,7 @@ import More from "../../assets/icon/more.svg"
 
 const SideBar = () => {
     return (
-        <div className="profile-col-side col-1">
+        <div className="feed-col-side col-1">
             <div className="menu">
                 <MenuCard
                     imgUrl={Avatar}

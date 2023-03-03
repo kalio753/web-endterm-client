@@ -42,10 +42,14 @@
     .search {
         flex: 1;
         position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         &-input {
             margin-left: 12px;
-            width: 99%;
+            width: 100%;
+            max-width: 654px;
             border-radius: 20px;
             height: 40px;
             padding: 8px 20px 8px 48px;
@@ -75,7 +79,7 @@
         &-icon {
             position: absolute;
             width: 20px;
-            left: 30px;
+            left: 14%;
             top: 10px;
             color: var(--text-secondary);
         }

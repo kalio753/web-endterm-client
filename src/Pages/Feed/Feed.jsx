@@ -1,12 +1,14 @@
 import React, { useState } from "react"
-import "./profile.scss"
+import "./feed.scss"
 import SideBar from "../../Components/SideBar/SideBar.jsx"
 import Avatar from "../../assets/images/avatar.jpg"
-import { Modal } from "antd"
+import { Input, Modal } from "antd"
+const { TextArea } = Input
 
-const Profile = () => {
-    document.title = "Profile"
+const Feed = ({ theme }) => {
+    document.title = "Not Facebook"
 
+    const [postContentValue, setPostContentValue] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false)
     const showModal = () => {
         setIsModalOpen(true)
@@ -20,9 +22,9 @@ const Profile = () => {
 
     return (
         <>
-            <section className="page-body profile">
+            <section className="page-body feed">
                 <SideBar />
-                <div className="profile-col-central">
+                <div className="feed-col-central">
                     <div className="feeds">
                         <div className="upload-section">
                             <div className="upload">
@@ -37,22 +39,31 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-                <div className="profile-col-side col-2">c</div>
+                <div className="feed-col-side col-2">c</div>
             </section>
 
             <Modal
-                title="Basic Modal"
+                title="Create post"
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
                 centered={true}
+                wrapClassName={`feed-modal ${
+                    theme === "dark" ? "feed-modal-dark" : "feed-modal-light"
+                }`}
             >
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
+                <TextArea
+                    value={postContentValue}
+                    onChange={(e) => setPostContentValue(e.target.value)}
+                    placeholder="What's on your mind, Kalio ..."
+                    autoSize={{
+                        minRows: 3,
+                        maxRows: 7,
+                    }}
+                />
             </Modal>
         </>
     )
 }
 
-export default Profile
+export default Feed

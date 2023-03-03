@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import "./App.scss"
 import "./Theme.scss"
 import Header from "./Layout/Header/Header.jsx"
-import Profile from "./Pages/Profile/Profile.jsx"
+import Feed from "./Pages/Feed/Feed.jsx"
 import Home from "./Pages/Home/Home.jsx"
 import Login from "./Pages/Login/Login.jsx"
 import Signup from "./Pages/Signup/Signup.jsx"
@@ -60,7 +60,10 @@ function App() {
                                 />
                             }
                         >
-                            <Route path="/" element={<Profile />}></Route>
+                            <Route
+                                path="/"
+                                element={<Feed theme={theme} />}
+                            ></Route>
                         </Route>
                         {/* <Route element={<UnProtecedLayout />}>
                             <Route
