@@ -1,24 +1,14 @@
-import React, { useState } from "react"
+import React from "react"
 import "./feed.scss"
 import SideBar from "../../Components/SideBar/SideBar.jsx"
+import FeedUploadInput from "../../Components/FeedUploadInput/FeedUploadInput.jsx"
 import Avatar from "../../assets/images/avatar.jpg"
-import { Input, Modal } from "antd"
-const { TextArea } = Input
+import Post from "../../assets/images/post.jpg"
+import Like from "../../assets/icon/like.svg"
+import Dislike from "../../assets/icon/dislike.svg"
 
 const Feed = ({ theme }) => {
     document.title = "Not Facebook"
-
-    const [postContentValue, setPostContentValue] = useState("")
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const showModal = () => {
-        setIsModalOpen(true)
-    }
-    const handleOk = () => {
-        setIsModalOpen(false)
-    }
-    const handleCancel = () => {
-        setIsModalOpen(false)
-    }
 
     return (
         <>
@@ -26,14 +16,79 @@ const Feed = ({ theme }) => {
                 <SideBar />
                 <div className="feed-col-central">
                     <div className="feeds">
-                        <div className="upload-section">
-                            <div className="upload">
-                                <img src={Avatar} alt="" />
-                                <div
-                                    className="upload-input"
-                                    onClick={showModal}
-                                >
-                                    What's on your mind, Kalio ...
+                        <FeedUploadInput theme={theme} />
+
+                        <div className="post-section">
+                            <div className="post">
+                                <div className="post-header">
+                                    <img src={Avatar} alt="" />
+                                    <div className="header-info">
+                                        <div className="name">
+                                            Dương Chí Kiện
+                                        </div>
+                                        <div className="posted-at">12h</div>
+                                    </div>
+                                </div>
+
+                                <div className="post-body">
+                                    <img src={Post} alt="" />
+                                </div>
+
+                                <div className="post-reaction">
+                                    <div className="like">
+                                        12
+                                        <img src={Like} alt="" />
+                                    </div>
+                                    <div className="dislike">
+                                        2<img src={Dislike} alt="" />
+                                    </div>
+                                </div>
+
+                                <div className="post-footer">
+                                    <button className="react-btn">
+                                        <img src={Like} alt="" />
+                                        Like
+                                    </button>
+                                    <button className="react-btn ">
+                                        <img src={Dislike} alt="" />
+                                        Dislike
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="post">
+                                <div className="post-header">
+                                    <img src={Avatar} alt="" />
+                                    <div className="header-info">
+                                        <div className="name">
+                                            Dương Chí Kiện
+                                        </div>
+                                        <div className="posted-at">12h</div>
+                                    </div>
+                                </div>
+
+                                <div className="post-body">
+                                    <img src={Post} alt="" />
+                                </div>
+
+                                <div className="post-reaction">
+                                    <div className="like">
+                                        12
+                                        <img src={Like} alt="" />
+                                    </div>
+                                    <div className="dislike">
+                                        2<img src={Dislike} alt="" />
+                                    </div>
+                                </div>
+
+                                <div className="post-footer">
+                                    <button className="react-btn like-active">
+                                        <img src={Like} alt="" />
+                                        Like
+                                    </button>
+                                    <button className="react-btn dislike-active">
+                                        <img src={Dislike} alt="" />
+                                        Dislike
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -41,27 +96,6 @@ const Feed = ({ theme }) => {
                 </div>
                 <div className="feed-col-side col-2">c</div>
             </section>
-
-            <Modal
-                title="Create post"
-                open={isModalOpen}
-                onOk={handleOk}
-                onCancel={handleCancel}
-                centered={true}
-                wrapClassName={`feed-modal ${
-                    theme === "dark" ? "feed-modal-dark" : "feed-modal-light"
-                }`}
-            >
-                <TextArea
-                    value={postContentValue}
-                    onChange={(e) => setPostContentValue(e.target.value)}
-                    placeholder="What's on your mind, Kalio ..."
-                    autoSize={{
-                        minRows: 3,
-                        maxRows: 7,
-                    }}
-                />
-            </Modal>
         </>
     )
 }

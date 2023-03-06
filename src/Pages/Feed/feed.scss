@@ -7,6 +7,11 @@
 
     --post-background-color: #fff;
     --upload-input-color: #e5e8ed;
+
+    --react-background-color: #e1e5eb;
+    --react-text-color: #333;
+    --react-icon-color: invert(11%) sepia(0%) saturate(1452%) hue-rotate(158deg)
+        brightness(99%) contrast(77%);
 }
 
 [data-theme="dark"] {
@@ -18,6 +23,11 @@
 
     --post-background-color: #0c3e50;
     --upload-input-color: #3f5c66;
+
+    --react-background-color: #0b536c;
+    --react-text-color: #fff;
+    --react-icon-color: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg)
+        brightness(103%) contrast(103%);
 }
 
 .feed {
@@ -40,29 +50,128 @@
         .feeds {
             width: 80%;
             margin-top: 19px;
-            .upload-section {
-                .upload {
-                    background-color: var(--post-background-color);
-                    display: flex;
-                    align-items: flex-start;
-                    padding: 16px;
-                    border-radius: 8px;
-                    gap: 12px;
 
-                    img {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 20px;
+            .post-section {
+                padding-bottom: 0;
+
+                .post {
+                    border-radius: 8px;
+                    overflow: hidden;
+                    background-color: var(--post-background-color);
+                    margin-bottom: 16px;
+                    &-header {
+                        padding: 16px 16px 0;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        img {
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 20px;
+                        }
+
+                        .header-info {
+                            .name {
+                                color: var(--text-primary);
+                                font-size: 1.6rem;
+                                font-weight: 500;
+                            }
+                            .posted-at {
+                                color: #909296;
+                                font-size: 1.2rem;
+                            }
+                        }
                     }
 
-                    .upload-input {
-                        cursor: pointer;
-                        background-color: var(--upload-input-color);
-                        color: var(--text-primary);
-                        height: 69px;
+                    &-body {
+                        display: flex;
+                        justify-content: center;
+                        margin-top: 12px;
+
+                        img {
+                            width: 80%;
+                        }
+                    }
+
+                    &-reaction {
+                        display: flex;
+                        align-items: center;
+                        margin: 8px 16px;
+                        gap: 8px;
+                        justify-content: space-between;
+
+                        div {
+                            display: flex;
+                            img {
+                                margin-left: 2px;
+                            }
+                        }
+
+                        .like {
+                            color: #2374e1;
+                            img {
+                                filter: invert(53%) sepia(90%) saturate(5524%)
+                                    hue-rotate(203deg) brightness(94%)
+                                    contrast(87%);
+                            }
+                        }
+
+                        .dislike {
+                            color: #ee3c5b;
+                            img {
+                                filter: invert(49%) sepia(70%) saturate(6602%)
+                                    hue-rotate(330deg) brightness(98%)
+                                    contrast(90%);
+                            }
+                        }
+                    }
+
+                    &-footer {
+                        display: flex;
+                        gap: 1px;
                         width: 100%;
-                        border-radius: 16px;
-                        padding: 6px 12px;
+                        margin-top: 8px;
+
+                        .react-btn {
+                            width: 100%;
+                            cursor: pointer;
+                            padding: 8px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 4px;
+                            background-color: var(--react-background-color);
+                            color: var(--react-text-color);
+
+                            img {
+                                filter: var(--react-icon-color);
+                            }
+
+                            &:hover {
+                                opacity: 0.8;
+                            }
+                        }
+
+                        .like-active {
+                            color: #2374e1;
+                            font-weight: 600;
+                            img {
+                                filter: invert(53%) sepia(90%) saturate(5524%)
+                                    hue-rotate(203deg) brightness(94%)
+                                    contrast(87%);
+                            }
+                        }
+
+                        .dislike-active {
+                            color: #ee3c5b;
+                            font-weight: 600;
+
+                            img {
+                                filter: invert(49%) sepia(70%) saturate(6602%)
+                                    hue-rotate(330deg) brightness(98%)
+                                    contrast(90%);
+                            }
+                        }
                     }
                 }
             }
@@ -72,26 +181,5 @@
     .feed-col-side.col-2 {
         position: fixed;
         right: 0;
-    }
-}
-
-.feed-modal {
-    .ant-modal-title {
-        text-align: center;
-        font-size: 2.4rem;
-        padding-bottom: 16px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .ant-modal-body {
-        textarea {
-            border: none;
-            padding: 8px;
-            font-size: 1.8rem;
-
-            &:focus {
-                box-shadow: none;
-            }
-        }
     }
 }
