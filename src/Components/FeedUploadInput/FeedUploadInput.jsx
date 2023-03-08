@@ -5,7 +5,7 @@ import Avatar from "../../assets/images/avatar.jpg"
 import { Input, Modal } from "antd"
 const { TextArea } = Input
 
-const FeedUploadInput = ({ theme }) => {
+const FeedUploadInput = ({ theme, user }) => {
     const [postContentValue, setPostContentValue] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [currFile, setCurrFile] = useState(null)
@@ -36,7 +36,7 @@ const FeedUploadInput = ({ theme }) => {
                 <div className="upload">
                     <img src={Avatar} alt="" />
                     <div className="upload-input" onClick={showModal}>
-                        What's on your mind, Kalio ...
+                        What's on your mind, {user?.full_name} ...
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@ const FeedUploadInput = ({ theme }) => {
                 <TextArea
                     value={postContentValue}
                     onChange={(e) => setPostContentValue(e.target.value)}
-                    placeholder="What's on your mind, Kalio ..."
+                    placeholder={`What's on your mind, ${user?.full_name} ...`}
                     autoSize={{
                         minRows: 3,
                         maxRows: 7,

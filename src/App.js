@@ -10,10 +10,9 @@ import ProtectedLayout from "./routes/ProtectedLayout.jsx"
 import { UnProtecedLayout } from "./routes/UnprotectedLayout.jsx"
 import useLocalStorage from "use-local-storage"
 import { useDispatch, useSelector } from "react-redux"
-import { getTest } from "./redux/slices/testSlice"
-import { getTestSelector } from "./redux/selector"
-import { useEffect } from "react"
 import AnimationLayout from "./Layout/Animation/AnimationLayout.jsx"
+import Verify from "./Pages/Verify.jsx"
+import Profile from "./Pages/Profile/Profile.jsx"
 
 function App() {
     const dispatch = useDispatch()
@@ -25,13 +24,6 @@ function App() {
         "theme",
         defaultDark ? "dark" : "light"
     )
-
-    useEffect(() => {
-        dispatch(getTest())
-    }, [dispatch])
-
-    const test = useSelector(getTestSelector)
-    console.log("alu", test)
 
     // const [theme, setTheme] = useState(localStorage.getItem("theme") || "light")
     const toggleTheme = () => {
@@ -52,20 +44,7 @@ function App() {
 
                 <Routes>
                     <Route element={<AnimationLayout />}>
-                        <Route
-                            element={
-                                <Header
-                                    toggleTheme={toggleTheme}
-                                    theme={theme}
-                                />
-                            }
-                        >
-                            <Route
-                                path="/"
-                                element={<Feed theme={theme} />}
-                            ></Route>
-                        </Route>
-                        {/* <Route element={<UnProtecedLayout />}>
+                        <Route element={<UnProtecedLayout />}>
                             <Route
                                 path="/"
                                 element={<Home toggleTheme={toggleTheme} />}
@@ -92,8 +71,29 @@ function App() {
                                     />
                                 }
                             >
-                                <Route path="about" element={<About />}></Route>
+                                <Route
+                                    path="feeds"
+                                    element={<Feed theme={theme} />}
+                                ></Route>
+                                <Route
+                                    path="profile"
+                                    element={<Profile theme={theme} />}
+                                ></Route>
                             </Route>
+                        </Route>
+
+                        {/* <Route
+                            element={
+                                <Header
+                                    toggleTheme={toggleTheme}
+                                    theme={theme}
+                                />
+                            }
+                        >
+                            <Route
+                                path="/"
+                                element={<Feed theme={theme} />}
+                            ></Route>
                         </Route> */}
 
                         <Route
@@ -105,6 +105,7 @@ function App() {
                             }
                         />
                     </Route>
+                    <Route path="/verify" element={<Verify />} />
                 </Routes>
             </Router>
         </div>

@@ -11,13 +11,13 @@ import MenuCard from "../../Components/MenuCard/MenuCard.jsx"
 import GlobalSvgIcon from "../../Components/GlobalSvgIcon/GlobalSvgIcon.jsx"
 import More from "../../assets/icon/more.svg"
 
-const SideBar = () => {
+const SideBar = ({ user }) => {
     return (
         <div className="feed-col-side col-1">
             <div className="menu">
                 <MenuCard
                     imgUrl={Avatar}
-                    title="Dương Chí Kiện"
+                    title={user?.full_name}
                     isAvatar={true}
                 />
                 <MenuCard imgUrl={Friend} title="Friends" />

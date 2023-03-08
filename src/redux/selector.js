@@ -1,1 +1,1 @@
-export const getTestSelector = (state) => state.test
+export const getProfileByIdSelector = (state) => state.profile?.profileById

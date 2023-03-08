@@ -28,6 +28,24 @@ function checkRecentDate(date) {
     return res
 }
 
+function validatePhoneNumber(phoneNumber) {
+    // Regular expression to match a phone number
+    const phoneRegex = /^\d{10}$/
+
+    // Test the phone number against the regular expression
+    return phoneRegex.test(phoneNumber)
+}
+
+function validateEmail(email) {
+    // Regular expression to match an email address
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    // Test the email address against the regular expression
+    return emailRegex.test(email)
+}
+
 module.exports = {
     checkRecentDate,
+    validatePhoneNumber,
+    validateEmail,
 }

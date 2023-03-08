@@ -2,7 +2,6 @@ import React from "react"
 import "./menuCard.scss"
 
 const MenuCard = ({ imgUrl, title, isAvatar, children }) => {
-    console.log(title, children)
     return (
         <div className="menu-card">
             {!children ? (

@@ -49,7 +49,7 @@
         height: 45px;
         background-color: #224957;
         border: none;
-        margin-top: 32px;
+        margin-top: 26px;
         color: #fff;
         font-size: 1.6rem;
 
@@ -89,6 +89,17 @@
                 text-decoration: underline;
             }
         }
+    }
+
+    &-spin {
+        display: flex;
+        justify-content: center;
+        margin: 16px;
+    }
+
+    &-err {
+        color: red;
+        margin-top: 12px;
     }
 
     &-btn {

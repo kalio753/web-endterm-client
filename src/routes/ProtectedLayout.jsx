@@ -1,13 +1,11 @@
 import { Link, Navigate, Outlet } from "react-router-dom"
-import { useAuth } from "../hooks/useAuth"
 
 export default function ProtectedLayout() {
-    // const { user } = useAuth()
-
-    // if (!user) {
-    //     console.log("getout")
-    //     return <Navigate to="/" />
-    // }
+    const isLogin = localStorage.getItem("token")
+    if (!isLogin) {
+        console.log("Not Authenticated")
+        return <Navigate to="/" />
+    }
 
     return (
         <div>

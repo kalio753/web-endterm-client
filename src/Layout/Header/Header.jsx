@@ -23,9 +23,14 @@ const Header = ({ toggleTheme, theme }) => {
         setOpen(flag)
     }
 
+    const handleLogout = () => {
+        localStorage.removeItem("token")
+        navigate("/login")
+    }
+
     const items = [
         {
-            label: <a href="#">Profile</a>,
+            label: <div onClick={() => navigate("/user/profile")}>Profile</div>,
             key: "0",
         },
         {
@@ -41,10 +46,7 @@ const Header = ({ toggleTheme, theme }) => {
         },
         {
             label: (
-                <div
-                    style={{ color: "red" }}
-                    onClick={() => navigate("/login")}
-                >
+                <div style={{ color: "red" }} onClick={handleLogout}>
                     Log out
                 </div>
             ),
