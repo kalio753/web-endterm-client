@@ -44,7 +44,24 @@ function App() {
 
                 <Routes>
                     <Route element={<AnimationLayout />}>
-                        <Route element={<UnProtecedLayout />}>
+                        <Route
+                            element={
+                                <Header
+                                    toggleTheme={toggleTheme}
+                                    theme={theme}
+                                />
+                            }
+                        >
+                            <Route
+                                path="feeds"
+                                element={<Feed theme={theme} />}
+                            ></Route>
+                            <Route
+                                path="profile/:id"
+                                element={<Profile theme={theme} />}
+                            ></Route>
+                        </Route>
+                        {/* <Route element={<UnProtecedLayout />}>
                             <Route
                                 path="/"
                                 element={<Home toggleTheme={toggleTheme} />}
@@ -60,7 +77,7 @@ function App() {
                                 path="/signup"
                                 element={<Signup toggleTheme={toggleTheme} />}
                             ></Route>
-                        </Route>
+                        </Route> */}
 
                         <Route path="/user" element={<ProtectedLayout />}>
                             <Route

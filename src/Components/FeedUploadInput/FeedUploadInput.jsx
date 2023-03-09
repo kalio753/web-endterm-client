@@ -2,20 +2,19 @@ import React, { createRef, useState } from "react"
 import "./feedUploadInput.scss"
 import Upload_ic from "../../assets/icon/file-upload.svg"
 import Avatar from "../../assets/images/avatar.jpg"
-import { Input, Modal } from "antd"
+import { Input, message, Modal } from "antd"
+import { AxiosExpress } from "../../../utils/axios"
 const { TextArea } = Input
 
 const FeedUploadInput = ({ theme, user }) => {
+    const token = localStorage.getItem("token")
     const [postContentValue, setPostContentValue] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [currFile, setCurrFile] = useState(null)
     const fileInput = createRef()
 
     const handleFileChange = (e) => {
-        console.log("file ne: ", e.target.files[0])
         setCurrFile(e.target.files[0])
-        // dispatch(setJsonData(jsonData))
-        // handleFileOnChange(setFileList, fileInput, setFileQuantities)
     }
 
     const handleRemoveFile = () => {
@@ -28,6 +27,30 @@ const FeedUploadInput = ({ theme, user }) => {
 
     const handleCancel = () => {
         setIsModalOpen(false)
+    }
+
+    const handleUploadPost = () => {
+        const fileFormData = new FormData()
+        fileFormData.append("file", currFile)
+        AxiosExpress.post(`/upload`, fileFormData, {
+            headers: { "content-type": "multipart/form-data" },
+        }).then((res) => {
+            if (res.data.code === "Only images & documents are allowed") {
+                message.warn("File can only be Images !")
+            } else if (typeof res.data !== "string") {
+                message.error("File upload failed, please try again later")
+            } else {
+                // console.log(res.data)
+                AxiosExpress.post(`/api/post/upload`, {
+                    token,
+                    body: {
+                        content: postContentValue,
+                        picture: res.data,
+                        user_id: user.id,
+                    },
+                }).then((res) => console.log(res))
+            }
+        })
     }
 
     return (
@@ -81,7 +104,9 @@ const FeedUploadInput = ({ theme, user }) => {
                     </div>
                 ) : null}
 
-                <button className="post-btn">Post</button>
+                <button className="post-btn" onClick={handleUploadPost}>
+                    Post
+                </button>
             </Modal>
         </>
     )

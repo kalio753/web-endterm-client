@@ -9,9 +9,15 @@ import { Link, Outlet, useNavigate } from "react-router-dom"
 import { DownOutlined } from "@ant-design/icons"
 import { Dropdown, Space } from "antd"
 import GlobalSvgIcon from "../../Components/GlobalSvgIcon/GlobalSvgIcon.jsx"
+import { useDispatch, useSelector } from "react-redux"
+import { getProfileMeSelector } from "../../redux/selector"
+import { getProfileById } from "../../redux/slices/profileSlice"
 
 const Header = ({ toggleTheme, theme }) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const currUser = useSelector(getProfileMeSelector)
+    const token = localStorage.getItem("token")
 
     const [open, setOpen] = useState(false)
     const handleMenuClick = (e) => {
@@ -28,9 +34,15 @@ const Header = ({ toggleTheme, theme }) => {
         navigate("/login")
     }
 
+    const handleNavigateToProfile = async () => {
+        dispatch(getProfileById({ token, id: currUser.id }))
+        // navigate("/user/profile")
+        navigate("/profile/" + currUser.id)
+    }
+
     const items = [
         {
-            label: <div onClick={() => navigate("/user/profile")}>Profile</div>,
+            label: <div onClick={handleNavigateToProfile}>Profile</div>,
             key: "0",
         },
         {

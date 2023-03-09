@@ -1,12 +1,32 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Cover from "../../assets/images/cover.jpg"
 import Avatar from "../../assets/images/avatar.jpg"
-import { DatePicker, Input, Modal, Select } from "antd"
+import { DatePicker, Input, message, Modal, Select } from "antd"
+import dayjs from "dayjs"
 
 import "./profile.scss"
+import { useDispatch, useSelector } from "react-redux"
+import { getProfileByIdSelector } from "../../redux/selector"
+import { useParams } from "react-router-dom"
+import { AxiosExpress } from "../../../utils/axios"
+import { getProfileById } from "../../redux/slices/profileSlice"
 
 const Profile = () => {
+    const currUser = useSelector(getProfileByIdSelector)
+    let { id } = useParams()
+    const token = localStorage.getItem("token")
+    const dispatch = useDispatch()
+
+    const [fullName, setFullName] = useState(undefined)
+    const [phone, setPhone] = useState(undefined)
+    const [dob, setDob] = useState(undefined)
+    const [dobToShow, setDobToShow] = useState(undefined)
+    const [gender, setGender] = useState(undefined)
+    const [location, setLocation] = useState(undefined)
+    const [bio, setBio] = useState(undefined)
+
     const [isModalOpen, setIsModalOpen] = useState(false)
+
     const showModal = () => {
         setIsModalOpen(true)
     }
@@ -15,6 +35,22 @@ const Profile = () => {
     }
     const handleCancel = () => {
         setIsModalOpen(false)
+    }
+
+    const handleSumbitUpdate = () => {
+        AxiosExpress.post(`/api/profile/update`, {
+            token,
+            id,
+            body: { full_name: fullName, phone, dob, gender, location, bio },
+        }).then(({ data }) => {
+            if (data.code === 200) {
+                message.success("Update successfully")
+                dispatch(getProfileById({ token, id }))
+                handleCancel()
+            } else {
+                message.danger("Something went wrong, please try again later")
+            }
+        })
     }
 
     return (
@@ -33,10 +69,16 @@ const Profile = () => {
 
                     <div className="profile-body-right">
                         <div className="profile-body-name">
-                            <h1>Dương Chí Kiện</h1>
-                            <div className="profile-body-name-desc">
-                                Haven't had a bio yet
-                            </div>
+                            <h1>{currUser?.full_name}</h1>
+                            {!currUser?.bio ? (
+                                <div className="profile-body-name-desc">
+                                    Haven't had a bio yet
+                                </div>
+                            ) : (
+                                <div className="profile-body-name-desc">
+                                    {currUser?.bio}
+                                </div>
+                            )}
                             <span
                                 className="profile-body-name-edit"
                                 onClick={showModal}
@@ -46,18 +88,34 @@ const Profile = () => {
                         </div>
                         <ul className="profile-info-list">
                             <li className="profile-info-item">
-                                <span>Gender: </span> <span>Male</span>
+                                <span>Gender: </span>{" "}
+                                <span>{`${
+                                    currUser?.gender
+                                        ? currUser?.gender
+                                        : "undefined"
+                                }`}</span>
                             </li>
                             <li className="profile-info-item">
                                 <span>Date of birth: </span>{" "}
-                                <span>03/07/2001</span>
+                                <span>{`${
+                                    currUser?.dob ? currUser?.dob : "undefined"
+                                }`}</span>
                             </li>
                             <li className="profile-info-item">
-                                <span>Phone: </span> <span>0993426320</span>
+                                <span>Phone: </span>{" "}
+                                <span>{`${
+                                    currUser?.phone
+                                        ? currUser?.phone
+                                        : "undefined"
+                                }`}</span>
                             </li>
                             <li className="profile-info-item">
                                 <span>Location: </span>{" "}
-                                <span>Ho Chi Minh city</span>
+                                <span>{`${
+                                    currUser?.location
+                                        ? currUser?.location
+                                        : "undefined"
+                                }`}</span>
                             </li>
                         </ul>
                     </div>
@@ -74,10 +132,23 @@ const Profile = () => {
                 footer={null}
             >
                 <div className="input-section">
-                    Full Name: <Input placeholder="" />
+                    Full Name:{" "}
+                    <Input
+                        defaultValue={currUser.full_name}
+                        value={fullName}
+                        onChange={(e) => {
+                            setFullName(e.target.value)
+                        }}
+                    />
                 </div>
                 <div className="input-section">
-                    Phone: <Input placeholder="" />
+                    Phone:{" "}
+                    <Input
+                        defaultValue={currUser.phone}
+                        placeholder=""
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                    />
                 </div>
                 <div className="input-section input-select">
                     Date of birth:{"  "}
@@ -85,19 +156,26 @@ const Profile = () => {
                         style={{
                             width: 200,
                         }}
-                        onChange={(date, dateString) =>
-                            console.log(date, dateString)
-                        }
+                        onChange={(date, dateString) => {
+                            setDobToShow(date)
+                            setDob(dateString)
+                        }}
+                        value={dobToShow}
+                        defaultValue={dayjs(currUser.dob, "YYYY-MM-DD")}
                     />
                 </div>
-                <div className="input-section input-select">
+                <div
+                    className="input-section input-select"
+                    style={{ marginBottom: 0 }}
+                >
                     Gender:{" "}
                     <Select
-                        defaultValue="male"
                         style={{
                             width: 200,
                         }}
-                        onChange={(value) => console.log(`selected ${value}`)}
+                        value={gender}
+                        onChange={(value) => setGender(value)}
+                        defaultValue={currUser.gender}
                         options={[
                             {
                                 value: "Male",
@@ -115,9 +193,29 @@ const Profile = () => {
                     />
                 </div>
                 <div className="input-section">
-                    Location: <Input placeholder="" />
+                    Location:{" "}
+                    <Input
+                        placeholder=""
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        defaultValue={currUser.location}
+                    />
                 </div>
-                <button className="input-confirm-btn">Confirm</button>
+                <div className="input-section">
+                    Bio:{" "}
+                    <Input
+                        placeholder=""
+                        value={bio}
+                        onChange={(e) => setBio(e.target.value)}
+                        defaultValue={currUser.bio}
+                    />
+                </div>
+                <button
+                    className="input-confirm-btn"
+                    onClick={handleSumbitUpdate}
+                >
+                    Confirm
+                </button>
             </Modal>
         </section>
     )

@@ -19,11 +19,11 @@ function checkRecentDate(date) {
     if (diffTime / (1000 * 60 * 60 * 24) >= 1)
         res = date.split("T")[0].split("-").reverse().join("/")
     else if (diffTime / (1000 * 60 * 60) >= 1) {
-        res = Math.round(diffTime / (1000 * 60 * 60)) + " tiếng trước"
+        res = Math.round(diffTime / (1000 * 60 * 60)) + "h"
     } else if (diffTime / (1000 * 60) >= 1) {
-        res = Math.round(diffTime / (1000 * 60)) + " phút trước"
+        res = Math.round(diffTime / (1000 * 60)) + "m"
     } else {
-        res = Math.round(diffTime / 1000) + " giây trước"
+        res = Math.round(diffTime / 1000) + "s"
     }
     return res
 }
