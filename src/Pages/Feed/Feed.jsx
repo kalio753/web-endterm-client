@@ -16,6 +16,7 @@ import {
 import { getProfileById, getProfileMe } from "../../redux/slices/profileSlice"
 import { getAllPosts } from "../../redux/slices/postSlice"
 import { checkRecentDate } from "../../../utils/helper"
+import PostCard from "../../Components/PostCard/PostCard.jsx"
 
 const Feed = ({ theme }) => {
     const RESOURCE_URL = "http://127.0.0.1:5000"
@@ -28,12 +29,11 @@ const Feed = ({ theme }) => {
     console.log("friendSuggest", friendSuggest)
 
     useEffect(() => {
-        dispatch(getProfileMe({ token }))
-        dispatch(getAllPosts({ token }))
-
-        AxiosExpress.post("/api/user/suggest-friend", { token }).then(
-            ({ data }) => setFriendSuggest(data.data)
-        )
+        // dispatch(getProfileMe({ token }))
+        // dispatch(getAllPosts({ token }))
+        // AxiosExpress.post("/api/user/suggest-friend", { token }).then(
+        //     ({ data }) => setFriendSuggest(data.data)
+        // )
     }, [dispatch])
 
     return (
@@ -93,42 +93,8 @@ const Feed = ({ theme }) => {
                                     </div>
                                 </div>
                             ))}
-                            {/* <div className="post">
-                                <div className="post-header">
-                                    <img src={Avatar} alt="" />
-                                    <div className="header-info">
-                                        <div className="name">
-                                            Dương Chí Kiện
-                                        </div>
-                                        <div className="posted-at">12h</div>
-                                    </div>
-                                </div>
 
-                                <div className="post-body">
-                                    <img src={Post} alt="" />
-                                </div>
-
-                                <div className="post-reaction">
-                                    <div className="like">
-                                        12
-                                        <img src={Like} alt="" />
-                                    </div>
-                                    <div className="dislike">
-                                        2<img src={Dislike} alt="" />
-                                    </div>
-                                </div>
-
-                                <div className="post-footer">
-                                    <button className="react-btn like-active">
-                                        <img src={Like} alt="" />
-                                        Like
-                                    </button>
-                                    <button className="react-btn dislike-active">
-                                        <img src={Dislike} alt="" />
-                                        Dislike
-                                    </button>
-                                </div>
-                            </div> */}
+                            <PostCard fullName={"Kalio"} postedAt={"8h"} />
                         </div>
                     </div>
                 </div>
@@ -153,6 +119,22 @@ const Feed = ({ theme }) => {
                             </div>
                         </div>
                     ))}
+
+                    <div className="friend-card">
+                        <img
+                            src={Avatar}
+                            alt=""
+                            className="friend-card-avatar"
+                        />
+
+                        <div className="friend-card-info">
+                            <div className="friend-card-fullname">
+                                Duong Chi Kien
+                            </div>
+
+                            <div className="friend-card-username">@kalio</div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </>

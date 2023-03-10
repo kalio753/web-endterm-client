@@ -10,6 +10,7 @@ import { getProfileByIdSelector } from "../../redux/selector"
 import { useParams } from "react-router-dom"
 import { AxiosExpress } from "../../../utils/axios"
 import { getProfileById } from "../../redux/slices/profileSlice"
+import PostCard from "../../Components/PostCard/PostCard.jsx"
 
 const Profile = () => {
     const currUser = useSelector(getProfileByIdSelector)
@@ -119,6 +120,12 @@ const Profile = () => {
                             </li>
                         </ul>
                     </div>
+                </div>
+
+                <div className="profile-post">
+                    <PostCard fullName={"Kalio"} postedAt={"8h"} />
+                    <PostCard fullName={"Kalio"} postedAt={"8h"} />
+                    <PostCard fullName={"Kalio"} postedAt={"8h"} />
                 </div>
             </div>
 

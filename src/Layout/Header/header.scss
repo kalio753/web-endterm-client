@@ -83,6 +83,18 @@
             top: 10px;
             color: var(--text-secondary);
         }
+
+        &-result {
+            display: flex;
+            position: absolute;
+            top: calc(100% + 4px);
+            width: 100%;
+            max-width: 654px;
+            flex-direction: column;
+            z-index: 2;
+            background-color: red;
+            padding: 8px;
+        }
     }
 
     .user {
