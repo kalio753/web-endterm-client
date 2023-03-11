@@ -120,7 +120,7 @@ const Header = ({ toggleTheme, theme }) => {
         <>
             <section className={`header`}>
                 <div className="logo">
-                    <Link to="/">
+                    <Link to="/user/feeds">
                         <img src={Logo} alt="" />
                     </Link>
                 </div>
