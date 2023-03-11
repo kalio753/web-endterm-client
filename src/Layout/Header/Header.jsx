@@ -191,7 +191,7 @@ const Header = ({ toggleTheme, theme }) => {
                             <img
                                 src={
                                     currUser.avatar
-                                        ? `${process.env.RESOURCE_URLRESOURCE_URL}${currUser.avatar}`
+                                        ? `${process.env.RESOURCE_URL}${currUser.avatar}`
                                         : Avatar
                                 }
                                 alt=""
