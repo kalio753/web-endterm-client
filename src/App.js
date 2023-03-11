@@ -113,14 +113,14 @@ function App() {
                             ></Route>
                         </Route> */}
 
-                        <Route
+                        {/* <Route
                             path="*"
                             element={
                                 <div>
                                     <h2>404 Page not found</h2>
                                 </div>
                             }
-                        />
+                        /> */}
                     </Route>
                     <Route path="/verify" element={<Verify />} />
                 </Routes>
