@@ -86,7 +86,7 @@ const FeedUploadInput = ({ theme, user }) => {
                     <img
                         src={
                             user.avatar
-                                ? `${RESOURCE_URL}${user.avatar}`
+                                ? `${process.env.RESOURCE_URL}${user.avatar}`
                                 : Avatar
                         }
                         alt=""

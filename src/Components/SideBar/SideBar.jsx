@@ -20,7 +20,9 @@ const SideBar = ({ user }) => {
             <div className="menu">
                 <MenuCard
                     imgUrl={
-                        user.avatar ? `${RESOURCE_URL}${user.avatar}` : Avatar
+                        user.avatar
+                            ? `${process.env.RESOURCE_URL}${user.avatar}`
+                            : Avatar
                     }
                     title={user?.full_name}
                     isAvatar={true}

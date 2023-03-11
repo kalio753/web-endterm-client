@@ -20,9 +20,6 @@ import PostCard from "../../Components/PostCard/PostCard.jsx"
 import { useNavigate } from "react-router-dom"
 
 const Feed = ({ theme }) => {
-    document.title = "Feed"
-    const RESOURCE_URL =
-        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com/"
     document.title = "Not Facebook"
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
@@ -31,8 +28,6 @@ const Feed = ({ theme }) => {
     const currUser = useSelector(getProfileMeSelector)
     const allPost = useSelector(getAllPostsSelector)
     const [friendSuggest, setFriendSuggest] = useState([])
-
-    console.log("friendSuggest", friendSuggest)
 
     useEffect(() => {
         dispatch(getProfileMe({ token }))
@@ -79,7 +74,7 @@ const Feed = ({ theme }) => {
                             <img
                                 src={
                                     user.avatar
-                                        ? `${RESOURCE_URL}${user.avatar}`
+                                        ? `${process.env.RESOURCE_URL}${user.avatar}`
                                         : Avatar
                                 }
                                 alt=""
