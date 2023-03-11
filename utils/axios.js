@@ -2,7 +2,7 @@ import axios from "axios"
 /* request pre-processing */
 
 // EXPRESS URL
-axios.defaults.baseURL = "http://127.0.0.1:5000"
+axios.defaults.baseURL = "http://127.0.0.1"
 axios.interceptors.request.use(
     (config) => {
         // add header token
