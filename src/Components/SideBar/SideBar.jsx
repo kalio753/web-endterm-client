@@ -13,7 +13,7 @@ import More from "../../assets/icon/more.svg"
 
 const SideBar = ({ user }) => {
     const RESOURCE_URL =
-        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com/"
+        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com"
 
     return (
         <div className="feed-col-side col-1">

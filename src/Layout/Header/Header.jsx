@@ -23,7 +23,7 @@ const Header = ({ toggleTheme, theme }) => {
     const currUser = useSelector(getProfileMeSelector)
     const token = localStorage.getItem("token")
     const RESOURCE_URL =
-        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com/"
+        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com"
 
     const [visible, setVisible] = useState(false)
     const [keyword, setKeyword] = useState("")

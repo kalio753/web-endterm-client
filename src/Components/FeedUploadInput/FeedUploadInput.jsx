@@ -15,7 +15,7 @@ const FeedUploadInput = ({ theme, user }) => {
     const [currFile, setCurrFile] = useState(null)
     const fileInput = createRef()
     const RESOURCE_URL =
-        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com/"
+        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com"
 
     const dispatch = useDispatch()
 

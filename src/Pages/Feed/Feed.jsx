@@ -38,7 +38,7 @@ const Feed = ({ theme }) => {
     }, [dispatch])
 
     const handleFriendCardClick = (id) => {
-        navigate("/profile/" + id)
+        navigate("/user/profile/" + id)
     }
 
     return (
@@ -92,22 +92,6 @@ const Feed = ({ theme }) => {
                             </div>
                         </div>
                     ))}
-
-                    <div className="friend-card">
-                        <img
-                            src={Avatar}
-                            alt=""
-                            className="friend-card-avatar"
-                        />
-
-                        <div className="friend-card-info">
-                            <div className="friend-card-fullname">
-                                Duong Chi Kien
-                            </div>
-
-                            <div className="friend-card-username">@kalio</div>
-                        </div>
-                    </div>
                 </div>
             </section>
         </>

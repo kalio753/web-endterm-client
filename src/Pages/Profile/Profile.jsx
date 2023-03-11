@@ -18,14 +18,14 @@ import Upload_ic from "../../assets/icon/file-upload.svg"
 import { checkRecentDate, dateToShow } from "../../../utils/helper"
 
 const Profile = () => {
-    document.title = "@" + currUser.username
     const authUser = useSelector(getProfileMeSelector)
     const currUser = useSelector(getProfileByIdSelector)
+    document.title = "@" + currUser.username
     let { id } = useParams()
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
     const RESOURCE_URL =
-        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com/"
+        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com"
 
     const [fullName, setFullName] = useState(undefined)
     const [phone, setPhone] = useState(undefined)
