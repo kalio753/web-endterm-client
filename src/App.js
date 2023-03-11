@@ -44,7 +44,7 @@ function App() {
 
                 <Routes>
                     <Route element={<AnimationLayout />}>
-                        <Route
+                        {/* <Route
                             element={
                                 <Header
                                     toggleTheme={toggleTheme}
@@ -60,8 +60,8 @@ function App() {
                                 path="/user/profile/:id"
                                 element={<Profile theme={theme} />}
                             ></Route>
-                        </Route>
-                        {/* <Route element={<UnProtecedLayout />}>
+                        </Route> */}
+                        <Route element={<UnProtecedLayout />}>
                             <Route
                                 path="/"
                                 element={<Home toggleTheme={toggleTheme} />}
@@ -97,7 +97,7 @@ function App() {
                                     element={<Profile theme={theme} />}
                                 ></Route>
                             </Route>
-                        </Route> */}
+                        </Route>
 
                         {/* <Route
                             element={
