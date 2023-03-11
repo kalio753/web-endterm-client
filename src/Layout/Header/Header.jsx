@@ -100,7 +100,7 @@ const Header = ({ toggleTheme, theme }) => {
 
     async function fetchUserList(username) {
         return fetch(
-            `http://localhost:5000/api/user/search-friend?token=${token}&kw=${username}`,
+            `${process.env.RESOURCE_URL}/api/user/search-friend?token=${token}&kw=${username}`,
             {
                 method: "POST",
                 body: JSON.stringify({ token: token, kw: username }),
