@@ -13,6 +13,8 @@ import VerifyModal from "../../Components/VerifyModal/VerifyModal.jsx"
 export default function Signup({ toggleTheme }) {
     document.title = "Signup"
 
+    const PASSWORD_LIMITATION = 6
+
     const [userName, setUserName] = useState("")
     const [fullName, setFullName] = useState("")
     const [email, setEmail] = useState("")

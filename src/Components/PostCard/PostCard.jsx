@@ -19,7 +19,8 @@ export default function PostCard({
     picUrl,
     postId,
 }) {
-    const RESOURCE_URL = "http://127.0.0.1:5000"
+    const RESOURCE_URL =
+        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com"
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
 
