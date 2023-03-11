@@ -22,7 +22,8 @@ const Header = ({ toggleTheme, theme }) => {
     const dispatch = useDispatch()
     const currUser = useSelector(getProfileMeSelector)
     const token = localStorage.getItem("token")
-    const RESOURCE_URL = "http://127.0.0.1:5000"
+    const RESOURCE_URL =
+        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com/"
 
     const [visible, setVisible] = useState(false)
     const [keyword, setKeyword] = useState("")

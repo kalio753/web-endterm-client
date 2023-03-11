@@ -8,6 +8,8 @@ import Bottom1 from "../../assets/icon/login-bottom1.svg"
 import Bottom2 from "../../assets/icon/login-bottom2.svg"
 
 const Home = ({ toggleTheme }) => {
+    document.title = "Welcome"
+
     return (
         <section className="login home">
             <div className="home-container">

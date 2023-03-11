@@ -20,7 +20,9 @@ import PostCard from "../../Components/PostCard/PostCard.jsx"
 import { useNavigate } from "react-router-dom"
 
 const Feed = ({ theme }) => {
-    const RESOURCE_URL = "http://127.0.0.1:5000"
+    document.title = "Feed"
+    const RESOURCE_URL =
+        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com/"
     document.title = "Not Facebook"
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()

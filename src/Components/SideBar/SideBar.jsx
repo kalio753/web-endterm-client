@@ -12,7 +12,8 @@ import GlobalSvgIcon from "../../Components/GlobalSvgIcon/GlobalSvgIcon.jsx"
 import More from "../../assets/icon/more.svg"
 
 const SideBar = ({ user }) => {
-    const RESOURCE_URL = "http://127.0.0.1:5000"
+    const RESOURCE_URL =
+        "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com/"
 
     return (
         <div className="feed-col-side col-1">

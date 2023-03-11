@@ -12,7 +12,6 @@ import VerifyModal from "../../Components/VerifyModal/VerifyModal.jsx"
 
 export default function Signup({ toggleTheme }) {
     document.title = "Signup"
-    const PASSWORD_LIMITATION = 3
 
     const [userName, setUserName] = useState("")
     const [fullName, setFullName] = useState("")

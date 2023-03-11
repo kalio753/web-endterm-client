@@ -50,7 +50,6 @@ function validateEmail(email) {
     // Test the email address against the regular expression
     return emailRegex.test(email)
 }
-
 module.exports = {
     checkRecentDate,
     validatePhoneNumber,
