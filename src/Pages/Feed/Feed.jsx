@@ -17,24 +17,32 @@ import { getProfileById, getProfileMe } from "../../redux/slices/profileSlice"
 import { getAllPosts } from "../../redux/slices/postSlice"
 import { checkRecentDate } from "../../../utils/helper"
 import PostCard from "../../Components/PostCard/PostCard.jsx"
+import { useNavigate } from "react-router-dom"
 
 const Feed = ({ theme }) => {
     const RESOURCE_URL = "http://127.0.0.1:5000"
     document.title = "Not Facebook"
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const currUser = useSelector(getProfileMeSelector)
     const allPost = useSelector(getAllPostsSelector)
     const [friendSuggest, setFriendSuggest] = useState([])
+
     console.log("friendSuggest", friendSuggest)
 
     useEffect(() => {
-        // dispatch(getProfileMe({ token }))
-        // dispatch(getAllPosts({ token }))
-        // AxiosExpress.post("/api/user/suggest-friend", { token }).then(
-        //     ({ data }) => setFriendSuggest(data.data)
-        // )
+        dispatch(getProfileMe({ token }))
+        dispatch(getAllPosts({ token }))
+        AxiosExpress.post("/api/user/suggest-friend", { token }).then(
+            ({ data }) => setFriendSuggest(data.data)
+        )
     }, [dispatch])
+
+    const handleFriendCardClick = (id) => {
+        navigate("/profile/" + id)
+    }
 
     return (
         <>
@@ -46,64 +54,32 @@ const Feed = ({ theme }) => {
 
                         <div className="post-section">
                             {allPost.map((post) => (
-                                <div className="post" key={post.id}>
-                                    <div className="post-header">
-                                        <img src={Avatar} alt="" />
-                                        <div className="header-info">
-                                            <div className="name">
-                                                {post.user.full_name}
-                                            </div>
-                                            <div className="posted-at">
-                                                {checkRecentDate(
-                                                    post.created_at
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="post-caption">
-                                        {post.content}
-                                    </div>
-                                    <div className="post-body">
-                                        <img
-                                            src={`${RESOURCE_URL}${post.picture}`}
-                                            alt=""
-                                        />
-                                    </div>
-
-                                    <div className="post-reaction">
-                                        <div className="like">
-                                            12
-                                            <img src={Like} alt="" />
-                                        </div>
-                                        <div className="dislike">
-                                            2<img src={Dislike} alt="" />
-                                        </div>
-                                    </div>
-
-                                    <div className="post-footer">
-                                        <button className="react-btn">
-                                            <img src={Like} alt="" />
-                                            Like
-                                        </button>
-                                        <button className="react-btn">
-                                            <img src={Dislike} alt="" />
-                                            Dislike
-                                        </button>
-                                    </div>
-                                </div>
+                                <PostCard
+                                    isOwner={currUser.id === post.user.id}
+                                    avatar={post.user.avatar}
+                                    itemKey={post.id}
+                                    postContent={post.content}
+                                    picUrl={post.picture}
+                                    fullName={post.user.full_name}
+                                    postedAt={checkRecentDate(post.created_at)}
+                                />
                             ))}
-
-                            <PostCard fullName={"Kalio"} postedAt={"8h"} />
                         </div>
                     </div>
                 </div>
                 <div className="feed-col-side col-2">
                     <h1>Friend suggestion</h1>
                     {friendSuggest.map((user) => (
-                        <div className="friend-card">
+                        <div
+                            className="friend-card"
+                            onClick={() => handleFriendCardClick(user.id)}
+                        >
                             <img
-                                src={Avatar}
+                                src={
+                                    user.avatar
+                                        ? `${RESOURCE_URL}${user.avatar}`
+                                        : Avatar
+                                }
                                 alt=""
                                 className="friend-card-avatar"
                             />

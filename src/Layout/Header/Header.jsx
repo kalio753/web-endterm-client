@@ -22,6 +22,7 @@ const Header = ({ toggleTheme, theme }) => {
     const dispatch = useDispatch()
     const currUser = useSelector(getProfileMeSelector)
     const token = localStorage.getItem("token")
+    const RESOURCE_URL = "http://127.0.0.1:5000"
 
     const [visible, setVisible] = useState(false)
     const [keyword, setKeyword] = useState("")
@@ -66,9 +67,8 @@ const Header = ({ toggleTheme, theme }) => {
     }
 
     const handleNavigateToProfile = async () => {
-        // dispatch(getProfileById({ token, id: currUser.id }))
-        // navigate("/user/profile")
-        navigate("/profile/" + currUser.id)
+        dispatch(getProfileById({ token, id: currUser.id }))
+        navigate("/user/profile/" + currUser.id)
     }
 
     const items = [
@@ -98,22 +98,19 @@ const Header = ({ toggleTheme, theme }) => {
     ]
 
     async function fetchUserList(username) {
-        // const token = getToken("usertoken")
-
-        return fetch(`https://api.nationalize.io/?name=${username}`, {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            // body: JSON.stringify({ token: token }),
-        })
+        return fetch(
+            `http://localhost:5000/api/user/search-friend?token=${token}&kw=${username}`,
+            {
+                method: "POST",
+                body: JSON.stringify({ token: token, kw: username }),
+            }
+        )
             .then((response) => response.json())
             .then((body) => {
                 console.log("body", body)
-                return body.country.map((item) => ({
-                    label: `${item.country_id}`,
-                    value: item.country_id,
+                return body.data.map((item) => ({
+                    label: `${item.full_name}`,
+                    value: item.id,
                 }))
             })
     }
@@ -131,12 +128,14 @@ const Header = ({ toggleTheme, theme }) => {
                         // mode="tags"
                         showSearch
                         value={keyword}
-                        placeholder="Search for friends..."
                         fetchOptions={fetchUserList}
                         onChange={(data) => {
                             console.log("ula", data)
-                            // anchor here
                             setKeyword(data)
+                            dispatch(getProfileById({ token, id: data }))
+
+                            navigate("/user/profile/" + data)
+                            // anchor here
                         }}
                         style={{
                             width: "100%",
@@ -188,7 +187,14 @@ const Header = ({ toggleTheme, theme }) => {
                         open={open}
                     >
                         <div className="user-avatar">
-                            <img src={Avatar} alt="" />
+                            <img
+                                src={
+                                    currUser.avatar
+                                        ? `${RESOURCE_URL}${currUser.avatar}`
+                                        : Avatar
+                                }
+                                alt=""
+                            />
                         </div>
                     </Dropdown>
                 </div>

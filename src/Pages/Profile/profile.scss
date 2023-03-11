@@ -6,6 +6,7 @@
 
     &-container {
         width: 1250px;
+        margin-bottom: 24px;
     }
 
     &-cover {
@@ -25,6 +26,10 @@
             padding: 4px 8px;
             cursor: pointer;
             border-radius: 4px;
+
+            input {
+                display: none;
+            }
 
             &:hover {
                 border: 1px solid #333;
@@ -66,6 +71,10 @@
                 border-radius: 50%;
                 background: rgba(255, 255, 255, 0.5);
                 display: none;
+
+                input {
+                    display: none;
+                }
             }
         }
 

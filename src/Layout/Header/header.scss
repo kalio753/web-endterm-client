@@ -46,6 +46,19 @@
         align-items: center;
         justify-content: center;
 
+        .ant-select {
+            width: 644px !important;
+
+            .ant-select-selector {
+                height: 34px;
+
+                input {
+                    height: 34px;
+                    font-size: 1.5rem;
+                }
+            }
+        }
+
         &-input {
             margin-left: 12px;
             width: 100%;

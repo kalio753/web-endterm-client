@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { createRef, useEffect, useState } from "react"
 import Cover from "../../assets/images/cover.jpg"
 import Avatar from "../../assets/images/avatar.jpg"
 import { DatePicker, Input, message, Modal, Select } from "antd"
@@ -6,17 +6,24 @@ import dayjs from "dayjs"
 
 import "./profile.scss"
 import { useDispatch, useSelector } from "react-redux"
-import { getProfileByIdSelector } from "../../redux/selector"
+import {
+    getProfileByIdSelector,
+    getProfileMeSelector,
+} from "../../redux/selector"
 import { useParams } from "react-router-dom"
 import { AxiosExpress } from "../../../utils/axios"
 import { getProfileById } from "../../redux/slices/profileSlice"
 import PostCard from "../../Components/PostCard/PostCard.jsx"
+import Upload_ic from "../../assets/icon/file-upload.svg"
+import { checkRecentDate, dateToShow } from "../../../utils/helper"
 
 const Profile = () => {
+    const authUser = useSelector(getProfileMeSelector)
     const currUser = useSelector(getProfileByIdSelector)
     let { id } = useParams()
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
+    const RESOURCE_URL = "http://127.0.0.1:5000"
 
     const [fullName, setFullName] = useState(undefined)
     const [phone, setPhone] = useState(undefined)
@@ -26,7 +33,60 @@ const Profile = () => {
     const [location, setLocation] = useState(undefined)
     const [bio, setBio] = useState(undefined)
 
+    const fileInput = createRef()
+
+    const [post, setPost] = useState([])
+
     const [isModalOpen, setIsModalOpen] = useState(false)
+
+    useEffect(() => {
+        AxiosExpress.post(`/api/post/get-by-id`, { token, id }).then(
+            ({ data }) => setPost(data.data)
+        )
+        dispatch(getProfileById({ token, id }))
+    }, [])
+
+    const handleCoverChange = (e) => {
+        const fileFormData = new FormData()
+        fileFormData.append("file", e.target.files[0])
+        AxiosExpress.post(`/upload?type=covers`, fileFormData, {
+            headers: { "content-type": "multipart/form-data" },
+        }).then((res) => {
+            if (res.data.code === "Only images & documents are allowed") {
+                message.warn("File can only be Images !")
+            } else if (typeof res.data !== "string") {
+                message.error("File upload failed, please try again later")
+            } else {
+                // console.log(res.data) This is the path
+                AxiosExpress.post("/api/profile/update-cover", {
+                    body: { avatar_2nd: res.data },
+                    id,
+                    token,
+                }).then((res) => dispatch(getProfileById({ token, id })))
+            }
+        })
+    }
+
+    const handleAvtChange = (e) => {
+        const fileFormData = new FormData()
+        fileFormData.append("file", e.target.files[0])
+        AxiosExpress.post(`/upload?type=avatars`, fileFormData, {
+            headers: { "content-type": "multipart/form-data" },
+        }).then((res) => {
+            if (res.data.code === "Only images & documents are allowed") {
+                message.warn("File can only be Images !")
+            } else if (typeof res.data !== "string") {
+                message.error("File upload failed, please try again later")
+            } else {
+                // console.log(res.data) This is the path
+                AxiosExpress.post("/api/profile/update-ava", {
+                    body: { avatar: res.data },
+                    id,
+                    token,
+                }).then((res) => dispatch(getProfileById({ token, id })))
+            }
+        })
+    }
 
     const showModal = () => {
         setIsModalOpen(true)
@@ -58,14 +118,52 @@ const Profile = () => {
         <section className="page-body profile">
             <div className="profile-container">
                 <div className="profile-cover">
-                    <img src={Cover} alt="" />
-                    <div className="profile-cover-edit">Edit cover photo</div>
+                    <img
+                        src={
+                            currUser.avatar_2nd
+                                ? `${RESOURCE_URL}${currUser.avatar_2nd}`
+                                : Cover
+                        }
+                        alt=""
+                    />
+                    {authUser.id === currUser.id ? (
+                        <form action="#">
+                            <label className="profile-cover-edit">
+                                Edit cover photo
+                                <input
+                                    type="file"
+                                    ref={fileInput}
+                                    multiple="multiple"
+                                    onChange={handleCoverChange}
+                                />
+                            </label>
+                        </form>
+                    ) : null}
                 </div>
 
                 <div className="profile-body">
                     <div className="profile-body-avatar">
-                        <img src={Avatar} alt="" />
-                        <div className="avatar-edit">Edit avatar</div>
+                        <img
+                            src={
+                                currUser.avatar
+                                    ? `${RESOURCE_URL}${currUser.avatar}`
+                                    : Avatar
+                            }
+                            alt=""
+                        />
+                        {authUser.id === currUser.id ? (
+                            <form action="#">
+                                <label className="avatar-edit">
+                                    Edit avatar
+                                    <input
+                                        type="file"
+                                        ref={fileInput}
+                                        multiple="multiple"
+                                        onChange={handleAvtChange}
+                                    />
+                                </label>
+                            </form>
+                        ) : null}
                     </div>
 
                     <div className="profile-body-right">
@@ -99,7 +197,9 @@ const Profile = () => {
                             <li className="profile-info-item">
                                 <span>Date of birth: </span>{" "}
                                 <span>{`${
-                                    currUser?.dob ? currUser?.dob : "undefined"
+                                    currUser?.dob
+                                        ? dateToShow(currUser.dob)
+                                        : "undefined"
                                 }`}</span>
                             </li>
                             <li className="profile-info-item">
@@ -123,9 +223,16 @@ const Profile = () => {
                 </div>
 
                 <div className="profile-post">
-                    <PostCard fullName={"Kalio"} postedAt={"8h"} />
-                    <PostCard fullName={"Kalio"} postedAt={"8h"} />
-                    <PostCard fullName={"Kalio"} postedAt={"8h"} />
+                    {post.map((item) => (
+                        <PostCard
+                            avatar={item.user.avatar}
+                            itemKey={item.id}
+                            postContent={item.content}
+                            picUrl={item.picture}
+                            fullName={item.user.full_name}
+                            postedAt={checkRecentDate(item.created_at)}
+                        />
+                    ))}
                 </div>
             </div>
 

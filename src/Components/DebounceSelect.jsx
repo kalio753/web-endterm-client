@@ -33,8 +33,9 @@ function DebounceSelect({ fetchOptions, debounceTimeout = 500, ...props }) {
             onSearch={debounceFetcher}
             className=""
             notFoundContent={fetching ? <Spin size="small" /> : null}
-            {...props}
             options={options}
+            placeholder="Search for friends..."
+            {...props}
         />
     )
 }

@@ -4,19 +4,32 @@ import Avatar from "../../assets/images/avatar.jpg"
 import Post from "../../assets/images/post.jpg"
 import Like from "../../assets/icon/like.svg"
 import Dislike from "../../assets/icon/dislike.svg"
-import { Dropdown } from "antd"
+import { Dropdown, message } from "antd"
+import { AxiosExpress } from "../../../utils/axios"
+import { useDispatch } from "react-redux"
+import { getAllPosts } from "../../redux/slices/postSlice"
 
 export default function PostCard({
+    isOwner,
+    avatar,
     fullName,
     postedAt,
     postContent,
-    key,
+    itemKey,
     picUrl,
+    postId,
 }) {
     const RESOURCE_URL = "http://127.0.0.1:5000"
+    const token = localStorage.getItem("token")
+    const dispatch = useDispatch()
+
     const items = [
         {
-            label: <div onClick={handleDeletePost}>Delete</div>,
+            label: (
+                <div style={{ color: "red " }} onClick={handleDeletePost}>
+                    Delete
+                </div>
+            ),
             key: "0",
         },
         {
@@ -25,34 +38,48 @@ export default function PostCard({
         },
     ]
 
-    function handleDeletePost() {}
+    function handleDeletePost() {
+        AxiosExpress.post(`/api/post/delete`, { token, id: itemKey }).then(
+            ({ data }) => {
+                if (data.code === 200) {
+                    dispatch(getAllPosts({ token }))
+                    message.success("Delete post successfully!")
+                }
+            }
+        )
+    }
 
     return (
-        <div className="post" key={key}>
+        <div className="post" key={itemKey}>
             <div className="post-header">
-                <img src={Avatar} alt="" />
+                <img
+                    src={avatar ? `${RESOURCE_URL}${avatar}` : Avatar}
+                    alt=""
+                />
                 <div className="header-info">
                     <div className="name">{fullName}</div>
                     <div className="posted-at">{postedAt}</div>
                 </div>
-                <div className="header-more">
-                    <Dropdown
-                        placement="bottomRight"
-                        menu={{
-                            items,
-                        }}
-                        trigger={["click"]}
-                    >
-                        <a onClick={(e) => e.preventDefault()}>...</a>
-                    </Dropdown>
-                </div>
+                {isOwner ? (
+                    <div className="header-more">
+                        <Dropdown
+                            placement="bottomRight"
+                            menu={{
+                                items,
+                            }}
+                            trigger={["click"]}
+                        >
+                            <a onClick={(e) => e.preventDefault()}>...</a>
+                        </Dropdown>
+                    </div>
+                ) : null}
             </div>
 
             <div className="post-caption">{postContent}</div>
 
             <div className="post-body">
-                {/* <img src={`${RESOURCE_URL}${picUrl}`} alt="" /> */}
-                <img src={Post} alt="" />
+                <img src={`${RESOURCE_URL}${picUrl}`} alt="" />
+                {/* <img src={Post} alt="" /> */}
             </div>
 
             <div className="post-reaction">

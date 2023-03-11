@@ -28,6 +28,13 @@ function checkRecentDate(date) {
     return res
 }
 
+function dateToShow(dateString) {
+    const dateObject = new Date(dateString)
+
+    const options = { day: "2-digit", month: "2-digit", year: "numeric" }
+    return dateObject.toLocaleDateString("en-GB", options)
+}
+
 function validatePhoneNumber(phoneNumber) {
     // Regular expression to match a phone number
     const phoneRegex = /^\d{10}$/
@@ -48,4 +55,5 @@ module.exports = {
     checkRecentDate,
     validatePhoneNumber,
     validateEmail,
+    dateToShow,
 }

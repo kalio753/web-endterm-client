@@ -12,11 +12,15 @@ import GlobalSvgIcon from "../../Components/GlobalSvgIcon/GlobalSvgIcon.jsx"
 import More from "../../assets/icon/more.svg"
 
 const SideBar = ({ user }) => {
+    const RESOURCE_URL = "http://127.0.0.1:5000"
+
     return (
         <div className="feed-col-side col-1">
             <div className="menu">
                 <MenuCard
-                    imgUrl={Avatar}
+                    imgUrl={
+                        user.avatar ? `${RESOURCE_URL}${user.avatar}` : Avatar
+                    }
                     title={user?.full_name}
                     isAvatar={true}
                 />

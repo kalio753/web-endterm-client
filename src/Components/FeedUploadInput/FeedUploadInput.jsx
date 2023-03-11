@@ -4,6 +4,8 @@ import Upload_ic from "../../assets/icon/file-upload.svg"
 import Avatar from "../../assets/images/avatar.jpg"
 import { Input, message, Modal } from "antd"
 import { AxiosExpress } from "../../../utils/axios"
+import { useDispatch } from "react-redux"
+import { getAllPosts } from "../../redux/slices/postSlice"
 const { TextArea } = Input
 
 const FeedUploadInput = ({ theme, user }) => {
@@ -12,6 +14,9 @@ const FeedUploadInput = ({ theme, user }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [currFile, setCurrFile] = useState(null)
     const fileInput = createRef()
+    const RESOURCE_URL = "http://127.0.0.1:5000"
+
+    const dispatch = useDispatch()
 
     const handleFileChange = (e) => {
         setCurrFile(e.target.files[0])
@@ -30,34 +35,61 @@ const FeedUploadInput = ({ theme, user }) => {
     }
 
     const handleUploadPost = () => {
-        const fileFormData = new FormData()
-        fileFormData.append("file", currFile)
-        AxiosExpress.post(`/upload`, fileFormData, {
-            headers: { "content-type": "multipart/form-data" },
-        }).then((res) => {
-            if (res.data.code === "Only images & documents are allowed") {
-                message.warn("File can only be Images !")
-            } else if (typeof res.data !== "string") {
-                message.error("File upload failed, please try again later")
-            } else {
-                // console.log(res.data)
-                AxiosExpress.post(`/api/post/upload`, {
-                    token,
-                    body: {
-                        content: postContentValue,
-                        picture: res.data,
-                        user_id: user.id,
-                    },
-                }).then((res) => console.log(res))
-            }
-        })
+        if (currFile) {
+            const fileFormData = new FormData()
+            fileFormData.append("file", currFile)
+            AxiosExpress.post(`/upload`, fileFormData, {
+                headers: { "content-type": "multipart/form-data" },
+            }).then((res) => {
+                if (res.data.code === "Only images & documents are allowed") {
+                    message.warn("File can only be Images !")
+                } else if (typeof res.data !== "string") {
+                    message.error("File upload failed, please try again later")
+                } else {
+                    // console.log(res.data)
+                    AxiosExpress.post(`/api/post/upload`, {
+                        token,
+                        body: {
+                            content: postContentValue,
+                            picture: res.data,
+                            user_id: user.id,
+                        },
+                    }).then((res) => {
+                        message.success("File uploaded successfully")
+                        dispatch(getAllPosts({ token }))
+                        setCurrFile(null)
+                        setIsModalOpen(false)
+                    })
+                }
+            })
+        } else {
+            AxiosExpress.post(`/api/post/upload`, {
+                token,
+                body: {
+                    content: postContentValue,
+                    user_id: user.id,
+                },
+            }).then((res) => {
+                message.success("File uploaded successfully")
+                dispatch(getAllPosts({ token }))
+                setCurrFile(null)
+                setIsModalOpen(false)
+            })
+        }
     }
 
     return (
         <>
             <div className="upload-section">
                 <div className="upload">
-                    <img src={Avatar} alt="" />
+                    <img
+                        src={
+                            user.avatar
+                                ? `${RESOURCE_URL}${user.avatar}`
+                                : Avatar
+                        }
+                        alt=""
+                    />
                     <div className="upload-input" onClick={showModal}>
                         What's on your mind, {user?.full_name} ...
                     </div>

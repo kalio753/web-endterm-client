@@ -57,7 +57,7 @@ function App() {
                                 element={<Feed theme={theme} />}
                             ></Route>
                             <Route
-                                path="profile/:id"
+                                path="/user/profile/:id"
                                 element={<Profile theme={theme} />}
                             ></Route>
                         </Route>
@@ -77,7 +77,7 @@ function App() {
                                 path="/signup"
                                 element={<Signup toggleTheme={toggleTheme} />}
                             ></Route>
-                        </Route> */}
+                        </Route>
 
                         <Route path="/user" element={<ProtectedLayout />}>
                             <Route
@@ -93,11 +93,11 @@ function App() {
                                     element={<Feed theme={theme} />}
                                 ></Route>
                                 <Route
-                                    path="profile"
+                                    path="profile/:id"
                                     element={<Profile theme={theme} />}
                                 ></Route>
                             </Route>
-                        </Route>
+                        </Route> */}
 
                         {/* <Route
                             element={
