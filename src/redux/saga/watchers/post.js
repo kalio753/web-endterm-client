@@ -1,8 +1,12 @@
 import { call, fork, put, takeLatest } from "redux-saga/effects"
-import { getAllPosts, setAllPosts } from "../../slices/postSlice"
+import {
+    getAllPosts,
+    getPostById,
+    setAllPosts,
+    setPostById,
+} from "../../slices/postSlice"
 import {} from "../../slices/profileSlice"
-import { requestGetAllPosts } from "../requests/post"
-import { requestGetProfileById } from "../requests/profile"
+import { requestGetAllPosts, requestGetPostById } from "../requests/post"
 
 function* handleGetAllPosts(action) {
     try {
@@ -18,4 +22,17 @@ function* onHandleGetAllPosts() {
     yield takeLatest(getAllPosts.type, handleGetAllPosts)
 }
 
-export const postSaga = [fork(onHandleGetAllPosts)]
+function* handleGetPostById(action) {
+    try {
+        const response = yield call(requestGetPostById, action.payload)
+        const { data } = response
+        yield put(setPostById(data))
+    } catch (error) {
+        console.log("handleGetPostById", error)
+    }
+}
+
+function* onHandleGetPostById() {
+    yield takeLatest(getPostById.type, handleGetPostById)
+}
+export const postSaga = [fork(onHandleGetAllPosts), fork(onHandleGetPostById)]

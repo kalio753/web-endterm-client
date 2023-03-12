@@ -7,6 +7,7 @@ import dayjs from "dayjs"
 import "./profile.scss"
 import { useDispatch, useSelector } from "react-redux"
 import {
+    getPostByIdSelector,
     getProfileByIdSelector,
     getProfileMeSelector,
 } from "../../redux/selector"
@@ -16,6 +17,7 @@ import { getProfileById } from "../../redux/slices/profileSlice"
 import PostCard from "../../Components/PostCard/PostCard.jsx"
 import Upload_ic from "../../assets/icon/file-upload.svg"
 import { checkRecentDate, dateToShow } from "../../../utils/helper"
+import { getPostById } from "../../redux/slices/postSlice"
 
 const Profile = () => {
     const authUser = useSelector(getProfileMeSelector)
@@ -37,14 +39,11 @@ const Profile = () => {
 
     const fileInput = createRef()
 
-    const [post, setPost] = useState([])
-
+    const post = useSelector(getPostByIdSelector)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     useEffect(() => {
-        AxiosExpress.post(`/api/post/get-by-id`, { token, id }).then(
-            ({ data }) => setPost(data.data)
-        )
+        dispatch(getPostById({ token, id }))
         dispatch(getProfileById({ token, id }))
     }, [])
 
@@ -64,7 +63,10 @@ const Profile = () => {
                     body: { avatar_2nd: res.data },
                     id,
                     token,
-                }).then((res) => dispatch(getProfileById({ token, id })))
+                }).then((res) => {
+                    message.success("Cover updated successfully")
+                    dispatch(getProfileById({ token, id }))
+                })
             }
         })
     }
@@ -85,7 +87,10 @@ const Profile = () => {
                     body: { avatar: res.data },
                     id,
                     token,
-                }).then((res) => dispatch(getProfileById({ token, id })))
+                }).then((res) => {
+                    message.success("Avatar updated successfully")
+                    dispatch(getProfileById({ token, id }))
+                })
             }
         })
     }
@@ -123,7 +128,7 @@ const Profile = () => {
                     <img
                         src={
                             currUser.avatar_2nd
-                                ? `${RESOURCE_URL}${currUser.avatar_2nd}`
+                                ? `${process.env.RESOURCE_URL}${currUser.avatar_2nd}`
                                 : Cover
                         }
                         alt=""
@@ -148,7 +153,7 @@ const Profile = () => {
                         <img
                             src={
                                 currUser.avatar
-                                    ? `${RESOURCE_URL}${currUser.avatar}`
+                                    ? `${process.env.RESOURCE_URL}${currUser.avatar}`
                                     : Avatar
                             }
                             alt=""
@@ -227,11 +232,13 @@ const Profile = () => {
                 <div className="profile-post">
                     {post.map((item) => (
                         <PostCard
+                            isOwner={item.user.id === authUser.id}
                             avatar={item.user.avatar}
                             itemKey={item.id}
                             postContent={item.content}
                             picUrl={item.picture}
                             fullName={item.user.full_name}
+                            owner={item.user.id}
                             postedAt={checkRecentDate(item.created_at)}
                         />
                     ))}

@@ -7,7 +7,8 @@ import Dislike from "../../assets/icon/dislike.svg"
 import { Dropdown, message } from "antd"
 import { AxiosExpress } from "../../../utils/axios"
 import { useDispatch } from "react-redux"
-import { getAllPosts } from "../../redux/slices/postSlice"
+import { getAllPosts, getPostById } from "../../redux/slices/postSlice"
+import { useNavigate } from "react-router-dom"
 
 export default function PostCard({
     isOwner,
@@ -17,12 +18,13 @@ export default function PostCard({
     postContent,
     itemKey,
     picUrl,
-    postId,
+    owner,
 }) {
     const RESOURCE_URL =
         "http://ec2-18-181-190-3.ap-northeast-1.compute.amazonaws.com"
     const token = localStorage.getItem("token")
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const items = [
         {
@@ -44,21 +46,31 @@ export default function PostCard({
             ({ data }) => {
                 if (data.code === 200) {
                     dispatch(getAllPosts({ token }))
+                    dispatch(getPostById({ token, id: owner }))
                     message.success("Delete post successfully!")
                 }
             }
         )
     }
 
+    const navigateToProfile = () => {
+        navigate("/user/profile/" + owner)
+    }
+
     return (
         <div className="post" key={itemKey}>
             <div className="post-header">
                 <img
-                    src={avatar ? `${RESOURCE_URL}${avatar}` : Avatar}
+                    src={
+                        avatar ? `${process.env.RESOURCE_URL}${avatar}` : Avatar
+                    }
                     alt=""
+                    onClick={navigateToProfile}
                 />
                 <div className="header-info">
-                    <div className="name">{fullName}</div>
+                    <div className="name" onClick={navigateToProfile}>
+                        {fullName}
+                    </div>
                     <div className="posted-at">{postedAt}</div>
                 </div>
                 {isOwner ? (
@@ -79,17 +91,18 @@ export default function PostCard({
             <div className="post-caption">{postContent}</div>
 
             <div className="post-body">
-                <img src={`${RESOURCE_URL}${picUrl}`} alt="" />
+                <img src={`${process.env.RESOURCE_URL}${picUrl}`} alt="" />
                 {/* <img src={Post} alt="" /> */}
             </div>
 
             <div className="post-reaction">
                 <div className="like">
-                    12
+                    {Math.floor(Math.random() * 1000) + 1}
                     <img src={Like} alt="" />
                 </div>
                 <div className="dislike">
-                    2<img src={Dislike} alt="" />
+                    {Math.floor(Math.random() * 500) + 1}
+                    <img src={Dislike} alt="" />
                 </div>
             </div>
 

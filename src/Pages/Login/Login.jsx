@@ -50,6 +50,9 @@ export default function Login({ toggleTheme }) {
                 setErrorMsg(null)
                 if (data.code === 508) {
                     showModal()
+                    AxiosExpress.post(`/api/user/resend-verification`, {
+                        user: userName,
+                    }).then(({ data }) => console.log(data))
                 } else if (!data.success) {
                     setErrorMsg(data.data)
                 } else {

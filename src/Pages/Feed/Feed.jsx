@@ -57,6 +57,7 @@ const Feed = ({ theme }) => {
                                     itemKey={post.id}
                                     postContent={post.content}
                                     picUrl={post.picture}
+                                    owner={post.user.id}
                                     fullName={post.user.full_name}
                                     postedAt={checkRecentDate(post.created_at)}
                                 />

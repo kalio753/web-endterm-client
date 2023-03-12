@@ -46,7 +46,7 @@ export default function Signup({ toggleTheme }) {
             setError(
                 `Invalid phone number, phone must be at least 10 digit characters`
             )
-        } else if (password < PASSWORD_LIMITATION) {
+        } else if (password.length < PASSWORD_LIMITATION) {
             setError(
                 `Password must be at least ${PASSWORD_LIMITATION} characters`
             )
