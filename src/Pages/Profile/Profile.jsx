@@ -185,12 +185,14 @@ const Profile = () => {
                                     {currUser?.bio}
                                 </div>
                             )}
-                            <span
-                                className="profile-body-name-edit"
-                                onClick={showModal}
-                            >
-                                Edit profile
-                            </span>
+                            {authUser.id === currUser.id ? (
+                                <span
+                                    className="profile-body-name-edit"
+                                    onClick={showModal}
+                                >
+                                    Edit profile
+                                </span>
+                            ) : null}
                         </div>
                         <ul className="profile-info-list">
                             <li className="profile-info-item">
